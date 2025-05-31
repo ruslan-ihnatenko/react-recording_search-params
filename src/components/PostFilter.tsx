@@ -32,7 +32,7 @@ export const PostFilter = () => {
   const letters = searchParams.getAll('letters') || [];
   const userId = +(searchParams.get('userId') || 0);
 
-  function setSearchWith(params: any) {
+  function setSearchWith(params: Params) {
     const search = getSearchWith(params, searchParams);
     setSearchParams(search);
   }
@@ -45,12 +45,10 @@ export const PostFilter = () => {
     setSearchWith({ query: event.target.value || null });
   }
 
-  function toggleLetter(ch: string) {
-    const newLetters = letters.includes(ch)
-      ? letters.filter(letter => letter !== ch)
-      : [...letters, ch];
-
-    setSearchWith({ letters: newLetters });
+  function getUpdatedLetters(letter: string): string[] {
+    return letters.includes(letter)
+      ? letters.filter(ch => letter !== ch)
+      : [...letters, letter];
   }
 
   function clearLetters() {
@@ -87,9 +85,7 @@ export const PostFilter = () => {
             key={letter}
             to={{
               search: getSearchWith({ 
-                letters: letters.includes(letter)
-                ? letters.filter(ch => letter !== ch)
-                : [...letters, letter]
+                letters: getUpdatedLetters(letter)
               }, searchParams),
             }}
             className={classNames('button', {

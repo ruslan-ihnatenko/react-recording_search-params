@@ -4,11 +4,11 @@ import { Post } from '../types';
 import classNames from 'classnames';
 
 type Props = {
-  posts: Post[];
+  filteredPosts: Post[];
   onDelete?: (id: number) => void;
 };
 
-export const PostList: React.FC<Props> = (({ posts, onDelete = () => {} }) => {
+export const PostList: React.FC<Props> = (({ filteredPosts, onDelete = () => {} }) => {
   const selectedPostId = 0;
   const [searchParams] = useSearchParams();
 
@@ -25,7 +25,7 @@ export const PostList: React.FC<Props> = (({ posts, onDelete = () => {} }) => {
       </thead>
   
       <tbody>
-        {posts.map(post => (
+        {filteredPosts.map(post => (
           <tr 
             key={post.id} 
             className={classNames({
