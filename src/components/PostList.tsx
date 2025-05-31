@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import React from 'react';
 import { Post } from '../types';
 import classNames from 'classnames';
@@ -10,6 +10,7 @@ type Props = {
 
 export const PostList: React.FC<Props> = (({ posts, onDelete = () => {} }) => {
   const selectedPostId = 0;
+  const [searchParams] = useSearchParams();
 
   return (
     <table className="table is-striped is-narrow">
@@ -36,7 +37,11 @@ export const PostList: React.FC<Props> = (({ posts, onDelete = () => {} }) => {
             <td>{post.body}</td>
 
             <td>
-              <Link to={`${post.id}`} className="icon button is-inverted is-info">
+              <Link 
+                to={`${post.id}`}
+                state={{ search: searchParams.toString() }}
+                className="icon button is-inverted is-info"
+              >
                 <i className="fas fa-pen"></i>
               </Link>
             </td>
